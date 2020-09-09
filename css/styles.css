@@ -1,0 +1,332 @@
+:root {
+  --x-spins: 1;
+  --y-spins: 1; }
+
+*,
+*::after,
+*::before {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box; }
+
+html {
+  font-size: 62.5%; }
+
+body {
+  font-family: "Grandstander", cursive; }
+
+h1 {
+  font-size: 3.5rem; }
+
+h2 {
+  font-size: 3rem; }
+
+h3 {
+  font-size: 2.5rem; }
+
+p {
+  font-size: 1.6rem; }
+
+.main {
+  width: 100vw;
+  height: 100vh;
+  background-image: linear-gradient(to right bottom, #c3073f, #df4482);
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+  .main .game-panel {
+    width: 140rem;
+    height: 60rem;
+    background-color: #d7d7d7;
+    border-radius: 6px;
+    box-shadow: 0 0 1rem 0.7rem rgba(15, 15, 15, 0.25);
+    display: flex;
+    justify-content: flex-start;
+    overflow: hidden; }
+    .main .game-panel > * {
+      padding: 3rem; }
+
+.player {
+  flex: 1 0 35%;
+  display: flex;
+  flex-direction: column;
+  background-color: #a0a0a0;
+  transition: all 1s; }
+  .player-active {
+    background-color: #349b5b; }
+  .player__heading {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #282828;
+    border-top: 0.5rem solid whitesmoke; }
+    .player__heading h1 {
+      text-transform: uppercase;
+      color: whitesmoke;
+      padding: 1rem;
+      text-align: center; }
+    .player__heading-icon {
+      width: 3.5rem;
+      height: 3.5rem;
+      fill: #c3073f;
+      margin: 0 1rem; }
+  .player__dice {
+    height: 4rem;
+    width: 4rem;
+    fill: whitesmoke; }
+  .player__info {
+    flex: 1 0 80%;
+    display: flex; }
+    .player__info-dices {
+      flex: 0 0 35%;
+      background-color: #505050;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-evenly;
+      align-items: center; }
+    .player__info-score {
+      flex: 1 0 50%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-evenly;
+      align-items: center;
+      background-color: #d7d7d7; }
+    .player__info-points, .player__info-current {
+      padding: 2rem 4rem;
+      border-radius: 6px;
+      background-color: whitesmoke;
+      box-shadow: 0 0 1rem 0.5rem rgba(15, 15, 15, 0.25); }
+      .player__info-points h3,
+      .player__info-points h1, .player__info-current h3,
+      .player__info-current h1 {
+        text-align: center;
+        padding: 0.5rem 0; }
+    .player__info-current {
+      color: whitesmoke;
+      background-image: linear-gradient(to right bottom, #c3073f, #df4482); }
+    .player__info-star {
+      margin: 0 auto;
+      display: block;
+      width: 3rem;
+      height: 3rem;
+      fill: #c3073f; }
+
+.action-panel {
+  flex: 1 0 30%;
+  background-color: #d7d7d7;
+  border: solid 1rem whitesmoke;
+  border-top: none;
+  border-bottom: none; }
+  .action-panel__heading {
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.2rem;
+    background: linear-gradient(#c3073f, #df4482);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    z-index: 0; }
+  .action-panel .results {
+    margin-top: 6rem;
+    width: 70%;
+    margin-left: 15%;
+    display: flex;
+    font-size: 4rem;
+    flex-wrap: wrap;
+    overflow: hidden; }
+    .action-panel .results__heading {
+      position: relative;
+      flex: 0 0 100%;
+      text-align: center;
+      text-transform: uppercase;
+      letter-spacing: 0.1rem;
+      z-index: 1;
+      background-color: whitesmoke;
+      padding: 1rem 0rem; }
+    .action-panel .results__window {
+      flex: 0 0 50%;
+      text-align: center;
+      background-color: #505050;
+      color: whitesmoke;
+      padding-top: 1rem; }
+      .action-panel .results__window:nth-child(2) {
+        border-right: 0.25rem solid whitesmoke; }
+      .action-panel .results__window:nth-child(1) {
+        border-left: 0.25rem solid whitesmoke; }
+  .action-panel .btn {
+    margin: 4rem auto;
+    display: block;
+    width: 70%;
+    padding: 1rem 0;
+    font-size: 3rem;
+    text-transform: uppercase;
+    background-image: linear-gradient(to right bottom, #74d457, #349b5b);
+    border-radius: 8px;
+    color: whitesmoke;
+    transition: all 0.3s;
+    border: none;
+    cursor: pointer;
+    font-family: "Grandstander", cursive; }
+    .action-panel .btn:hover {
+      background-image: linear-gradient(to right bottom, #349b5b, #74d457);
+      transform: translateY(-4px) scale(1.03); }
+    .action-panel .btn:active {
+      transform: translateY(1px) scale(0.97); }
+    .action-panel .btn:focus {
+      outline: none; }
+
+.cube {
+  width: 15rem;
+  height: 15rem;
+  transform-style: preserve-3d;
+  margin: auto;
+  position: relative;
+  transition: all 3s ease-out; }
+  .cube--1 {
+    transform: rotateX(calc(var(--x-spins) * 360deg)) rotateY(calc(0deg + (var(--y-spins) * 360deg))); }
+  .cube--2 {
+    transform: rotateX(calc(270deg + (var(--y-spins) * 360deg))) rotateY(calc(var(--y-spins) * 360deg)); }
+  .cube--3 {
+    transform: rotateX(calc(var(--x-spins) * 360deg)) rotateY(calc(270deg + (var(--y-spins) * 360deg))); }
+  .cube--4 {
+    transform: rotateX(calc(var(--x-spins) * 360deg)) rotateY(calc(90deg + (var(--y-spins) * 360deg))); }
+  .cube--5 {
+    transform: rotateX(calc(90deg + (var(--y-spins) * 360deg))) rotateY(calc(var(--y-spins) * 360deg)); }
+  .cube--6 {
+    transform: rotateX(calc(180deg + (var(--y-spins) * 360deg))) rotateY(calc(var(--y-spins) * 360deg)); }
+  .cube-container {
+    position: relative;
+    margin-top: 5rem;
+    perspective: 1500px;
+    perspective-origin: 50% 50%; }
+  .cube__side {
+    width: 15rem;
+    height: 15rem;
+    background-image: radial-gradient(#505050, #282828);
+    position: absolute;
+    font-size: 13rem;
+    text-align: center;
+    padding: 0rem 1rem;
+    color: white;
+    border-radius: 6px; }
+    .cube__side .dot {
+      width: 2rem;
+      height: 2rem;
+      border-radius: 50%;
+      background-color: whitesmoke;
+      position: absolute; }
+    .cube__side--1 {
+      transform: rotateY(0deg) translateZ(7.5rem); }
+      .cube__side--1 .dot--1 {
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%); }
+    .cube__side--2 {
+      transform: rotateX(90deg) translateZ(7.5rem); }
+      .cube__side--2 .dot--1 {
+        top: 20%;
+        right: 20%; }
+      .cube__side--2 .dot--2 {
+        bottom: 20%;
+        left: 20%; }
+    .cube__side--3 {
+      transform: rotateY(90deg) translateZ(7.5rem); }
+      .cube__side--3 .dot--1 {
+        top: 20%;
+        right: 20%; }
+      .cube__side--3 .dot--2 {
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%); }
+      .cube__side--3 .dot--3 {
+        bottom: 20%;
+        left: 20%; }
+    .cube__side--4 {
+      transform: rotateY(-90deg) translateZ(7.5rem); }
+      .cube__side--4 .dot--1 {
+        top: 20%;
+        left: 20%; }
+      .cube__side--4 .dot--2 {
+        top: 20%;
+        right: 20%; }
+      .cube__side--4 .dot--3 {
+        bottom: 20%;
+        left: 20%; }
+      .cube__side--4 .dot--4 {
+        bottom: 20%;
+        right: 20%; }
+    .cube__side--5 {
+      transform: rotateX(-90deg) translateZ(7.5rem); }
+      .cube__side--5 .dot--1 {
+        top: 20%;
+        left: 20%; }
+      .cube__side--5 .dot--2 {
+        top: 20%;
+        right: 20%; }
+      .cube__side--5 .dot--3 {
+        bottom: 20%;
+        left: 20%; }
+      .cube__side--5 .dot--4 {
+        bottom: 20%;
+        right: 20%; }
+      .cube__side--5 .dot--5 {
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%); }
+    .cube__side--6 {
+      transform: rotateY(180deg) translateZ(7.5rem); }
+      .cube__side--6 .dot--1 {
+        top: 20%;
+        left: 20%; }
+      .cube__side--6 .dot--2 {
+        top: 20%;
+        right: 20%; }
+      .cube__side--6 .dot--3 {
+        bottom: 20%;
+        left: 20%; }
+      .cube__side--6 .dot--4 {
+        bottom: 20%;
+        right: 20%; }
+      .cube__side--6 .dot--5 {
+        bottom: 50%;
+        left: 20%;
+        transform: translateY(50%); }
+      .cube__side--6 .dot--6 {
+        bottom: 50%;
+        right: 20%;
+        transform: translateY(50%); }
+
+@keyframes dice-blinking {
+  0% {
+    fill: #74d457; }
+  50% {
+    transform: scale(1.08);
+    fill: #349b5b; }
+  100% {
+    transform: scale(1);
+    fill: #74d457; } }
+
+.dice-blinking {
+  animation-name: dice-blinking;
+  animation-duration: 1s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-direction: alternate; }
+
+@keyframes dice-used {
+  0% {
+    fill: #c3073f; }
+  50% {
+    transform: scale(1.08);
+    fill: #df4482; }
+  100% {
+    transform: scale(1);
+    fill: #c3073f; } }
+
+.dice-used {
+  animation-name: dice-blinking;
+  animation-duration: 2s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards; }

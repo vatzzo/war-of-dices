@@ -1,0 +1,48 @@
+@keyframes dice-blinking {
+  0% {
+    fill: $color-green-light;
+  }
+
+  50% {
+    transform: scale(1.08);
+    fill: $color-green;
+  }
+
+  100% {
+    transform: scale(1);
+    fill: $color-green-light;
+  }
+}
+
+// class to toggle
+.dice-blinking {
+  animation-name: dice-blinking;
+  animation-duration: 1s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+@keyframes dice-used {
+  0% {
+    fill: $color-red;
+  }
+
+  50% {
+    transform: scale(1.08);
+    fill: $color-rasp-light;
+  }
+
+  100% {
+    transform: scale(1);
+    fill: $color-red;
+  }
+}
+
+.dice-used {
+  animation-name: dice-blinking;
+  animation-duration: 2s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+}

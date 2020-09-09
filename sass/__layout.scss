@@ -1,0 +1,212 @@
+.main {
+  width: 100vw;
+  height: 100vh;
+  background-image: linear-gradient(
+    to right bottom,
+    $color-red,
+    $color-rasp-light
+  );
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .game-panel {
+    width: 140rem;
+    height: 60rem;
+    background-color: $color-grey-light;
+    border-radius: 6px;
+    box-shadow: 0 0 1rem 0.7rem rgba($color-black-dark, 0.25);
+    display: flex;
+    justify-content: flex-start;
+    overflow: hidden;
+
+    & > * {
+      padding: 3rem;
+    }
+  }
+}
+
+.player {
+  flex: 1 0 35%;
+  display: flex;
+  flex-direction: column;
+  background-color: $color-grey;
+  transition: all 1s;
+
+  &-active {
+    background-color: $color-green;
+  }
+
+  &__heading {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: $color-black-light;
+    border-top: 0.5rem solid $color-white;
+    h1 {
+      text-transform: uppercase;
+      color: $color-white;
+      padding: 1rem;
+      text-align: center;
+    }
+
+    &-icon {
+      width: 3.5rem;
+      height: 3.5rem;
+      fill: $color-red;
+      margin: 0 1rem;
+    }
+  }
+
+  &__dice {
+    height: 4rem;
+    width: 4rem;
+    fill: $color-white;
+  }
+
+  &__info {
+    flex: 1 0 80%;
+    display: flex;
+
+    &-dices {
+      flex: 0 0 35%;
+      background-color: $color-grey-dark;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-evenly;
+      align-items: center;
+    }
+
+    &-score {
+      flex: 1 0 50%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-evenly;
+      align-items: center;
+      background-color: $color-grey-light;
+    }
+
+    &-points,
+    &-current {
+      padding: 2rem 4rem;
+      border-radius: 6px;
+      background-color: $color-white;
+      box-shadow: 0 0 1rem 0.5rem rgba($color-black-dark, 0.25);
+      h3,
+      h1 {
+        text-align: center;
+        padding: 0.5rem 0;
+      }
+    }
+
+    &-current {
+      color: $color-white;
+      background-image: linear-gradient(
+        to right bottom,
+        $color-red,
+        $color-rasp-light
+      );
+    }
+
+    &-star {
+      margin: 0 auto;
+      display: block;
+      width: 3rem;
+      height: 3rem;
+      fill: $color-red;
+    }
+  }
+}
+
+.action-panel {
+  flex: 1 0 30%;
+  background-color: $color-grey-light;
+  border: solid 1rem $color-white;
+  border-top: none;
+  border-bottom: none;
+
+  &__heading {
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.2rem;
+    background: linear-gradient($color-red, $color-rasp-light);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    z-index: 0;
+  }
+
+  & .results {
+    margin-top: 6rem;
+    width: 70%;
+    margin-left: 15%;
+    display: flex;
+    font-size: 4rem;
+    flex-wrap: wrap;
+    overflow: hidden;
+
+    &__heading {
+      position: relative;
+      flex: 0 0 100%;
+      text-align: center;
+      text-transform: uppercase;
+      letter-spacing: 0.1rem;
+      z-index: 1;
+      background-color: $color-white;
+      padding: 1rem 0rem;
+    }
+    &__window {
+      flex: 0 0 50%;
+      text-align: center;
+      background-color: $color-grey-dark;
+      color: $color-white;
+      padding-top: 1rem;
+
+      &:nth-child(2) {
+        border-right: 0.25rem solid $color-white;
+      }
+
+      &:nth-child(1) {
+        border-left: 0.25rem solid $color-white;
+      }
+    }
+  }
+
+  .btn {
+    margin: 4rem auto;
+    display: block;
+    width: 70%;
+    padding: 1rem 0;
+    font-size: 3rem;
+    text-transform: uppercase;
+    background-image: linear-gradient(
+      to right bottom,
+      $color-green-light,
+      $color-green
+    );
+    border-radius: 8px;
+    color: $color-white;
+    transition: all 0.3s;
+    border: none;
+    cursor: pointer;
+    font-family: "Grandstander", cursive;
+
+    &:hover {
+      background-image: linear-gradient(
+        to right bottom,
+        $color-green,
+        $color-green-light
+      );
+      transform: translateY(-4px) scale(1.03);
+    }
+
+    &:active {
+      transform: translateY(1px) scale(0.97);
+    }
+
+    &:focus {
+      outline: none;
+    }
+  }
+}

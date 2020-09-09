@@ -1,0 +1,14 @@
+{
+  "name": "war_of_dices",
+  "version": "1.0.0",
+  "description": "a cool dice game",
+  "main": "index.js",
+  "scripts": {
+    "compile:sass": "node-sass sass/main.scss css/styles.css -w"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "node-sass": "^4.14.1"
+  }
+}
