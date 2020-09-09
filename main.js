@@ -15,9 +15,29 @@ class UI {
     }
   }
 
-  static uploadScore(playerIndex, randomNumber) {
-    const scoreTable = document.querySelector(`#score--${playerIndex}`);
-    scoreTable.textContent += randomNumber;
+  static useDice(playerIndex, usedDice) {
+    let dice = document.querySelector(`.player__dice--${playerIndex}${usedDice}`);
+    console.log(dice);
+    dice.classList.add('dice-used');
+  }
+
+  static uploadScore(state, currentResult1, currentResult2) {
+    const scoreTable1 = document.querySelector('#score--1');
+    const scoreTable2 = document.querySelector('#score--2');
+
+    switch (state) {
+      case 0:
+        scoreTable1.textContent = Number(scoreTable1.textContent) + currentResult1;
+        scoreTable2.textContent = Number(scoreTable1.textContent) + currentResult2;
+        break;
+      case 1:
+        scoreTable1.textContent = Number(scoreTable1.textContent) + (currentResult1 + currentResult2);
+        break;
+      case 2:
+        scoreTable2.textContent = Number(scoreTable2.textContent) + (currentResult1 + currentResult2);
+        break;
+    }
+    
   }
 
   static uploadCurrent(playerIndex, randomNumber) {
@@ -32,7 +52,7 @@ class Player {
   constructor(playerIndex, score, collectedDices, usedDices) {
     this.playerIndex = playerIndex;
     this.score = score;
-    this.collectedDices = collectedDices;
+    this.currentResult = this.currentResult;
     this.usedDices = usedDices;
   }
 }
@@ -56,45 +76,68 @@ class Dice {
   static getRandomNumber(max, min) {
     return Math.floor(Math.random() * (max - min)) + min;
   }
+
+  static compare(currentResult1, currentResult2) {
+    if(currentResult1 === currentResult2) {
+      return 0;
+    } else if(currentResult1 > currentResult2) {
+      return 1;
+    } else {
+      return 2;
+    }
+  }
 }
 
-// Declaration of 2 players
 let playerOne = new Player(1, 0, 0, 0);
 let playerTwo = new Player(2, 0, 0, 0);
 
-// Current Player Index
+
 let currentPlayerIndex = 1;
 
 const button = document.querySelector(".btn");
 button.addEventListener("click", () => {
+  button.disabled = true;
+  setTimeout(function(){button.disabled = false }, 3100);
   UI.changeBoardColor(currentPlayerIndex);
   let randomNumber = Dice.getRandomNumber(6, 1);
   if (currentPlayerIndex === 1) {
     Dice.rollDice(randomNumber);
-    UI.uploadCurrent(currentPlayerIndex, randomNumber);
+    playerOne.currentResult = randomNumber;
+    UI.uploadCurrent(currentPlayerIndex, playerOne.currentResult);
+    playerOne.usedDices++;
+    UI.useDice(playerOne.playerIndex, playerOne.usedDices);
     currentPlayerIndex = 2;
   } else {
     Dice.rollDice(randomNumber);
-    UI.uploadCurrent(currentPlayerIndex, randomNumber);
+    playerTwo.currentResult = randomNumber;
+    UI.uploadCurrent(currentPlayerIndex, playerTwo.currentResult);
+    playerTwo.usedDices++;
+    UI.useDice(playerTwo.playerIndex, playerTwo.usedDices);
     currentPlayerIndex = 1;
+  }
+
+  if(playerOne.usedDices === playerTwo.usedDices) {
+    setTimeout(function () {
+      let comparisonResult = Dice.compare(playerOne.currentResult, playerTwo.currentResult);
+      UI.uploadScore(comparisonResult, playerOne.currentResult, playerTwo.currentResult);
+      UI.uploadCurrent(playerTwo.playerIndex, 0);
+      UI.uploadCurrent(playerOne.playerIndex, 0);
+    }, 3000);
+
+    if(playerOne.usedDices ===8 && playerTwo.usedDices === 8) {
+    
+
+      setTimeout(function(){  
+        if (playerOne.score > playerTwo.score) {
+        alert(`Congratulations! The winner is player 1`);
+        }else if(playerOne.score < playerTwo.score) {
+        alert(`Congratulations! The winner is player 2`);
+        } else {
+        alert(`Congratulations! It seems that we have a tie.`);
+        
+      } 
+      location.reload();}, 3000);
+    }
   }
 });
 
-// SWITCHING COLOR
-// let button = document.querySelector(".btn");
-// let index = 1;
-// button.addEventListener("click", () => {
-//   console.log(index);
-//   UI.changeBoardColor(index);
-//   if (index === 1) {
-//     index = 2;
-//   } else {
-//     index = 1;
-//   }
-// });
-
-// ROLLING
-// let button = document.querySelector(".btn");
-// button.addEventListener("click", () => {
-//   Dice.rollDice();
-// });

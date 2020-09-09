@@ -297,23 +297,6 @@ p {
         right: 20%;
         transform: translateY(50%); }
 
-@keyframes dice-blinking {
-  0% {
-    fill: #74d457; }
-  50% {
-    transform: scale(1.08);
-    fill: #349b5b; }
-  100% {
-    transform: scale(1);
-    fill: #74d457; } }
-
-.dice-blinking {
-  animation-name: dice-blinking;
-  animation-duration: 1s;
-  animation-timing-function: ease-in-out;
-  animation-iteration-count: infinite;
-  animation-direction: alternate; }
-
 @keyframes dice-used {
   0% {
     fill: #c3073f; }
@@ -325,7 +308,7 @@ p {
     fill: #c3073f; } }
 
 .dice-used {
-  animation-name: dice-blinking;
+  animation-name: dice-used;
   animation-duration: 2s;
   animation-timing-function: ease-in-out;
   animation-iteration-count: 1;
