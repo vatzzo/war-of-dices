@@ -14,6 +14,15 @@
   </head>
   <body>
     <main class="main">
+      <div class="final-info">
+        <div class="final-info__box">
+          <div class="final-info__container">
+            <p>Game over!</p>
+            <button id="btn-new-game" class="btn btn--red">new game</button>
+            <button id="btn-continue" class="btn btn--green">continue</button>
+          </div>
+        </div>
+      </div>
       <div class="game-panel">
         <div class="player player--1">
           <div class="player__heading">
@@ -105,19 +114,19 @@
           </div>
 
           <div class="results">
-            <h3 class="results__heading">Current</h3>
-            <div class="results__window">0</div>
-            <div class="results__window">0</div>
+            <h3 class="results__heading">Games</h3>
+            <div id="results--1" class="results__window">0</div>
+            <div id="results--2" class="results__window">0</div>
           </div>
 
-          <button class="btn">roll</button>
+          <button id="roll-btn" class="btn btn--green">roll</button>
         </div>
         <div class="player player--2">
           <div class="player__heading">
             <svg class="player__heading-icon">
               <use xlink:href="img/sprite.svg#icon-user"></use>
             </svg>
-            <h1>player 1</h1>
+            <h1>player 2</h1>
           </div>
           <div class="player__info">
             <div class="player__info-score">

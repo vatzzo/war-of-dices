@@ -17,7 +17,6 @@ class UI {
 
   static useDice(playerIndex, usedDice) {
     let dice = document.querySelector(`.player__dice--${playerIndex}${usedDice}`);
-    console.log(dice);
     dice.classList.add('dice-used');
   }
 
@@ -28,7 +27,7 @@ class UI {
     switch (state) {
       case 0:
         scoreTable1.textContent = Number(scoreTable1.textContent) + currentResult1;
-        scoreTable2.textContent = Number(scoreTable1.textContent) + currentResult2;
+        scoreTable2.textContent = Number(scoreTable2.textContent) + currentResult2;
         break;
       case 1:
         scoreTable1.textContent = Number(scoreTable1.textContent) + (currentResult1 + currentResult2);
@@ -36,8 +35,36 @@ class UI {
       case 2:
         scoreTable2.textContent = Number(scoreTable2.textContent) + (currentResult1 + currentResult2);
         break;
+      case 3:
+        scoreTable1.textContent = 0;
+        scoreTable2.textContent = 0;
+        break;
     }
-    
+  }
+
+  static continueGame(score1, score2) {
+    const playerScoreWindow1 = document.querySelector("#results--1");
+    const playerScoreWindow2 = document.querySelector("#results--2");
+    const dices = document.querySelectorAll(".player__dice");
+
+    if(score1 > score2) {
+      playerScoreWindow1.textContent = Number(playerScoreWindow1.textContent) + 1;
+    } else if(score1 < score2) {
+      playerScoreWindow2.textContent = Number(playerScoreWindow2.textContent) + 1;
+    } else if(score1 === score2) {
+      playerScoreWindow1.textContent = Number(playerScoreWindow1.textContent) + 1;
+      playerScoreWindow2.textContent = Number(playerScoreWindow2.textContent) + 1;
+    }
+
+    // Reset Dices
+    dices.forEach(dice => dice.classList.remove('dice-used'));
+
+    // Reset Score
+    this.uploadScore(3,0,0);
+
+    // Reset Current
+    this.uploadCurrent(1, 0);
+    this.uploadCurrent(2, 0);
   }
 
   static uploadCurrent(playerIndex, randomNumber) {
@@ -94,7 +121,7 @@ let playerTwo = new Player(2, 0, 0, 0);
 
 let currentPlayerIndex = 1;
 
-const button = document.querySelector(".btn");
+const button = document.querySelector("#roll-btn");
 button.addEventListener("click", () => {
   button.disabled = true;
   setTimeout(function(){button.disabled = false }, 3100);
@@ -120,24 +147,33 @@ button.addEventListener("click", () => {
     setTimeout(function () {
       let comparisonResult = Dice.compare(playerOne.currentResult, playerTwo.currentResult);
       UI.uploadScore(comparisonResult, playerOne.currentResult, playerTwo.currentResult);
+      playerOne.score += playerOne.currentResult;
+      playerTwo.score += playerTwo.currentResult;
       UI.uploadCurrent(playerTwo.playerIndex, 0);
       UI.uploadCurrent(playerOne.playerIndex, 0);
     }, 3000);
 
-    if(playerOne.usedDices ===8 && playerTwo.usedDices === 8) {
+    if(playerOne.usedDices === 8 && playerTwo.usedDices === 8) {
     
+      const newGameBtn = document.getElementById("btn-new-game");
+      const contBtn = document.getElementById("btn-continue");
+      const alertWindow = document.querySelector(".final-info");
 
       setTimeout(function(){  
-        if (playerOne.score > playerTwo.score) {
-        alert(`Congratulations! The winner is player 1`);
-        }else if(playerOne.score < playerTwo.score) {
-        alert(`Congratulations! The winner is player 2`);
-        } else {
-        alert(`Congratulations! It seems that we have a tie.`);
-        
-      } 
-      location.reload();}, 3000);
+        alertWindow.classList.add('final-info--active');
+        newGameBtn.addEventListener('click', () => { location.reload() });
+        contBtn.addEventListener("click", () => {
+          UI.continueGame(playerOne.score, playerTwo.score);
+          currentPlayerIndex = 1;
+          playerOne.usedDices = 0;
+          playerTwo.usedDices = 0;
+          playerOne.currentResult = 0;
+          playerTwo.currentResult = 0;
+          alertWindow.classList.remove('final-info--active');
+        });
+      }, 3000);
+      playerOne.score = 0;
+      playerTwo.score = 0;
     }
   }
 });
-
